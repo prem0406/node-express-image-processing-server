@@ -23,6 +23,11 @@ const imageProcessor =  (filename) => {
                     destination: resizedDestination
                 }});
                 
+                const monochromeWorker = new Worker(pathToMonochromeWorker, {workerData: {
+                    source: sourcePath,
+                    destination: monochromeDestination
+                }});
+
                 resizeWorker.on('message', (message) => {
                     resizeWorkerFinished = true;
                     if(monochromeWorkerFinished) {
@@ -40,12 +45,7 @@ const imageProcessor =  (filename) => {
                     }
                 });
 
-                const monochromeWorker = new Worker(pathToMonochromeWorker, {workerData: {
-                        source: sourcePath,
-                        destination: monochromeDestination
-                }});
-
-                monochromeWorker.on('message', (message) => {
+               monochromeWorker.on('message', (message) => {
                     monochromeWorkerFinished = true;
                     if(resizeWorkerFinished){
                         resolve('monochromeWorker finished processing');
