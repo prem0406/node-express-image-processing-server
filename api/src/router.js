@@ -22,8 +22,8 @@ function fileFilter(request, file, callback){
 }
 
 const upload = multer({
-    fileFilter: fileFilter,
-    storage: storage
+    fileFilter,
+    storage
 });
 
 router.post('/upload', upload.single('photo'), (request, response) =>{
@@ -31,9 +31,9 @@ router.post('/upload', upload.single('photo'), (request, response) =>{
         return response.status(400).json({
             error: request.fileValidationError
         });
-    } else {
-        return response.status(201).json({
-            success: true
-        })
     }
+
+    return response.status(201).json({
+        success: true
+    });
 })
