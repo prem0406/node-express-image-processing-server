@@ -15,7 +15,7 @@ const imageProcessor =  (filename) => {
 
     let resizeWorkerFinished = false;
     let monochromeWorkerFinished = false;
-    new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject)=>{
         if(isMainThread){
             try {
                 const resizeWorker = new Worker(pathToResizeWorker, {workerData: {
