@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 function fileFilter(request, file, callback){
-    if(file.mimetype === 'image/png'){
+    if(file.mimetype !== 'image/png'){
         request.fileValidationError = 'Wrong File Type';
         callback(null, false, new Error('Wrong File Type'));
     } else {
@@ -26,13 +26,13 @@ const upload = multer({
     storage: storage
 });
 
-router.post('/upload', upload.single('photo'),(request, response) =>{
+router.post('/upload', upload.single('photo'), (request, response) =>{
     if(request.fileValidationError) {
         return response.status(400).json({
             error: request.fileValidationError
         });
     } else {
-        response.status(201).json({
+        return response.status(201).json({
             success: true
         })
     }
