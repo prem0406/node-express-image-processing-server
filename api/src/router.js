@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const multer = require('multer');
 
-module.exports = router;
-
 function filename(request, file, callback){
     callback(null, file.originalname);
 }
@@ -27,13 +25,11 @@ const upload = multer({
 });
 
 router.post('/upload', upload.single('photo'), (request, response) =>{
-    if(request.fileValidationError) {
-        return response.status(400).json({
-            error: request.fileValidationError
-        });
-    }
+    if(request.fileValidationError)   
+     return response.status(400).json({ error: request.fileValidationError});
+    
 
-    return response.status(201).json({
-        success: true
-    });
+    return response.status(201).json({success: true });
 })
+
+module.exports = router;
