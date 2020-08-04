@@ -40,12 +40,10 @@ const imageProcessor =  (filename) => {
                     }
                 });
 
-                const monochromeWorker = new Worker(pathToMonochromeWorker, {
-                    workerData: {
+                const monochromeWorker = new Worker(pathToMonochromeWorker, {workerData: {
                         source: sourcePath,
                         destination: monochromeDestination
-                    }
-                })
+                }});
 
                 monochromeWorker.on('message', (message) => {
                     monochromeWorkerFinished = true;
